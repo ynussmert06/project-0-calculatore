@@ -1,55 +1,33 @@
-
-number1 = float(input("первое число: "))
-number2 = float(input("второе число: "))
+operation = {
+      "+": lambda number1, number2: number1 + number2,
+      "-": lambda number1, number2: number1 - number2,
+      "*": lambda number1, number2: number1 * number2,
+      "/": lambda number1, number2: number1 / number2 if number2 != 0 else "ошибка"
+   }
+try:
+    number1 = float(input("первое число: "))
+    number2 = float(input("второе число: "))
+except ValueError:
+    print("введено не число, остановка")
+    exit()
 function = input("действия: +, -, *, /, end: ")
 while function != "end":
-    if function == "+":
-        otvet = number1 + number2
+    if function in operation:
+        otvet = operation[function](number1, number2)
         print(otvet)
-        number1 = otvet
-        user_otvet = input("продолжить действия с ответом? y/n ")
-        if user_otvet == "y":
-            new_number2 = float(input("второе число "))
-            number2 = new_number2
-            function = input("действия: +, -, *, /, end: ")
-        else:
+        if otvet == "ошибка":
             break
-    if function == "-":
-        otvet = number1 - number2
-        print(otvet)
-        number1 = otvet
-        user_otvet = input("продолжить действия с ответом? y/n ")
+        user_otvet = input("продолжить работу с ответом? y/n: ")
         if user_otvet == "y":
-            new_number2 = float(input("второе число "))
-            number2 = new_number2
-            function = input("действия: +, -, *, /, end: ")
-        else:
-            break
-    if function == "*":
-        otvet = number1 * number2
-        print(otvet)
-        number1 = otvet
-        user_otvet = input("продолжить действия с ответом? y/n ")
-        if user_otvet == "y":
-            new_number2 = float(input("второе число "))
-            number2 = new_number2
-            function = input("действия: +, -, *, /, end: ")
-        else:
-            break
-    if function == "/":
-        try:
-            otvet = number1 / number2
-            print(otvet)
-            number1 = otvet
-            user_otvet = input("продолжить действия с ответом? y/n ")
-            if user_otvet == "y":
-                new_number2 = float(input("второе число "))
+            try:
+                new_number2 = float(input("введите второе число: "))
+                number1 = otvet
                 number2 = new_number2
                 function = input("действия: +, -, *, /, end: ")
-            else:
+            except ValueError:
+                print("введено не число, остановка")
                 break
-        except ZeroDivisionError:
-            print("деление на 0, конец цикла")
+        else:
             break
 print("end while")
 
